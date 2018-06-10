@@ -13,4 +13,4 @@ Ex turba vero imae sortis et paupertinae in tabernis aliqui pernoctant vinariis,
 
 <?php $body = ob_get_clean(); ?>
 
-<?php require($_SERVER['DOCUMENT_ROOT'] . '/view/layout.php'); ?>
+<?php require(ROOT . '/App/View/layout.php'); ?>

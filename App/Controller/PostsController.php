@@ -18,7 +18,7 @@ class PostsController extends AppController
         $this->render('frontend.home');
     }
 
-    public function postAction(){
+    public function postsAction(){
         $this->render('frontend.post');
     }
 

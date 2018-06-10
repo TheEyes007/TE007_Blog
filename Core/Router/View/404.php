@@ -7,5 +7,4 @@ La page et l'url que vous choisissez n'existe pas.
 </p>
 
 <?php $body = ob_get_clean(); ?>
-
-<?php require(ROOT . '/Core/Router/View/layout.php'); ?>
+<?php require(ROOT . '/Core/Router//View/layout.php'); ?>

@@ -43,7 +43,7 @@ namespace Core\Router;
             foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
                 if ($route->match($this->url))
                 {
-                    return $route->call();
+                   return $route->call();
                 }
             }
             require ROOT . '/Core/Router/View/404.php';

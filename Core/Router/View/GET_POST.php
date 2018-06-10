@@ -7,5 +7,4 @@
 </p>
 
 <?php $body = ob_get_clean(); ?>
-
-<?php require(ROOT . '/Core/Router/View/layout.php'); ?>
+<?php require(ROOT . '/Core/Router//View/layout.php'); ?>
