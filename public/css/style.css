@@ -82,3 +82,23 @@ a{
     line-height: 1.33;
     border-radius: 35px;
 }
+
+.btn-circle-red {
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    background-color: red;
+}
+
+.btn-circle-green {
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    background-color: green;
+}
+
+th {
+    text-align:center;
+}

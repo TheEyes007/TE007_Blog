@@ -6,7 +6,8 @@
  * Time: 19:29
  */
 
-use Core\Config;
+use \Core\Auth\DbAuth;
+use \Core\Database\dbConnect;
 
 class App
 {
@@ -26,6 +27,8 @@ class App
 
             require ROOT . '/Core/Autoloader.php';
             Core\Autoloader::register();
+
+            require ROOT . '/App/Config/router.php';
         }
 
 }

@@ -14,4 +14,8 @@ class Routing
     public function redirectToRoute($path){
         header('Location: /'.$path);
     }
+
+    public function redirectPreviousRoute(){
+        header('Location:'.$_SERVER[HTTP_REFERER] );
+    }
 }

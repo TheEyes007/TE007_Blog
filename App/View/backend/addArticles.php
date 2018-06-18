@@ -4,7 +4,7 @@ use App\Form\PostsForm;
 
 $title = 'Mon blog';
 $form = new PostsForm();
-$comments_form = $form->NewComment();
+$comments_form = $form->NewPost();
 
 
 ob_start();

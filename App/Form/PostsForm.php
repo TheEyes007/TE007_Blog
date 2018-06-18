@@ -9,11 +9,10 @@
 namespace App\Form;
 
 use Core\Form\FormType;
-use App\Repository\PostsRepository;
 
 class PostsForm
 {
-    public function NewComment(){
+    public function NewPost(){
         $form = new FormType();
         $form_new = [];
         $form_new [] = $form->input('titre','text','Titre de votre article','form-control','titre','Titre de l\'article','form-group','');
@@ -22,7 +21,7 @@ class PostsForm
         return $form_new;
     }
 
-    public function EditComment($titre,$contain){
+    public function EditPost($titre,$contain){
         $form = new FormType();
         $form_edit = [];
         $form_edit [] = $form->input('titre','text','Titre de votre article','form-control','titre','Titre de l\'article','form-group',$titre);

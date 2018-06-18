@@ -1,16 +1,35 @@
 <?php $title = 'Mon blog'; ?>
-
 <?php ob_start(); ?>
-<h1>Blog de Tartanpion</h1>
-<p>
+<div class="container">
+    <div class="row">
+        <div clas="inline-block">
+            <h4>Listes des articles
+                <a class="btn btn-success float-right" href="/backoffice/add">Nouveau article</a>
+            </h4>
+        </div>
+        <hr/>
+        <div class="center-align">
+            <?php
+            foreach ($data as $value) {
+                echo "<h2>" . $value->title . "</h2>";
+                if ($value->fk_user === '1') {
+                    echo "<p>Article n°" . $value->id . " écrit le " . $value->date_create . " par Administrateur.</p>";
+                } else {
+                    echo "<p>Article n°" . $value->id . " écrit le " . $value->date_create . " par Anonyme.</p>";
+                }
+                if($value->date_update != NULL) {
+                    echo "<p>Date de la dernière mise à jour : ".$value->date_update."</p>";
+                }
+                echo '<div class="text-justify"><hr/>'.html_entity_decode(trim(substr($value->contains,0,600),'"')).'</div>';
+                echo '<a href=/posts/'.$value->id.' class="float-left">Lire la suite</a>';
+            }
+            ?>
 
-Procedente igitur mox tempore cum adventicium nihil inveniretur, relicta ora maritima in Lycaoniam adnexam Isauriae se contulerunt ibique densis intersaepientes itinera praetenturis provincialium et viatorum opibus pascebantur.
-
-Haec igitur lex in amicitia sanciatur, ut neque rogemus res turpes nec faciamus rogati. Turpis enim excusatio est et minime accipienda cum in ceteris peccatis, tum si quis contra rem publicam se amici causa fecisse fateatur. Etenim eo loco, Fanni et Scaevola, locati sumus ut nos longe prospicere oporteat futuros casus rei publicae. Deflexit iam aliquantum de spatio curriculoque consuetudo maiorum.
-
-Ex turba vero imae sortis et paupertinae in tabernis aliqui pernoctant vinariis, non nulli velariis umbraculorum theatralium latent, quae Campanam imitatus lasciviam Catulus in aedilitate sua suspendit omnium primus; aut pugnaciter aleis certant turpi sono fragosis naribus introrsum reducto spiritu concrepantes; aut quod est studiorum omnium maximum ab ortu lucis ad vesperam sole fatiscunt vel pluviis, per minutias aurigarum equorumque praecipua vel delicta scrutantes.
-</p>
+        </div>
+    </div>
+</div>
 
 <?php $body = ob_get_clean(); ?>
 
 <?php require(ROOT . '/App/View/layout.php'); ?>
+

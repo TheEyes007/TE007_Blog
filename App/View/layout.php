@@ -25,7 +25,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/backoffice">Administration</a></li>
+                    <li><a href="/backoffice">Gestion des articles</a></li>
+                    <li><a href="/backoffice/comments">Gestion des commentaires</a></li>
+                    <li><a href="/register">S'inscrire</a></li>
                 </ul>
                 <form class="navbar-form navbar-left">
                     <div class="form-group">

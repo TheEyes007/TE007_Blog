@@ -33,9 +33,11 @@ class FormType
     }
 
     //Input pour les mails, téléphones et autres qui n'ont pas d'attributs name.
-    public function input_other($type)
+    public function input_other($type,$placeholder,$name,$class_input,$for,$content,$class)
     {
-        return $this->surround('<input type="' . $type . '"/>', '');
+        return $this->surround($this->labels($for,$content),
+            '<input name = "'. $name .'" placeholder="'. $placeholder .'" class="'. $class_input .'" type="' . $type . '"/>',
+            '',$class);
     }
 
     public function textArea($id,$textarea,$class_input,$row = 10,$cols = 50,$defaut_contain,$for,$content,$class)

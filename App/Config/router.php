@@ -8,7 +8,8 @@
 
 use \App\Controller\PostsController;
 use \App\Controller\ManagePostsController;
-
+use \App\Controller\ManageCommentsController;
+use \Core\ManageUser\Auth\DbAuth;
 
 // Initialisation de l'objet
     $router = new \Core\Router\Router($_GET['url']);
@@ -18,6 +19,17 @@ use \App\Controller\ManagePostsController;
         $home = New PostsController();
         $home->indexAction();
     });
+
+    $router->get('/register', function () {
+        $home = New PostsController();
+        $home->registerAction();
+    });
+
+    $router->post('/register', function () {
+    $home = New PostsController();
+    $home->registerAction();
+    });
+
     $router->get('/posts', function () {
         $posts = New PostsController();
         $posts->postsAction();
@@ -27,44 +39,24 @@ use \App\Controller\ManagePostsController;
         $contacts->contactsAction();
     });
 
-// backoffice
-    $router->get('/backoffice', function () {
-        $home = New ManagePostsController();
-        $home->indexAction();
+    $router->get('/posts/:id', function ($id) {
+    $home = New PostsController();
+    $home->articlesAction($id);
     });
 
-    $router->get('/backoffice/views/:id', function ($id) {
-    $home = New ManagePostsController();
-    $home->onePostAction($id);
+    $router->post('/posts/:id', function ($id) {
+    $home = New PostsController();
+    $home->articlesAction($id);
     });
 
-    $router->get('/backoffice/add', function () {
-        $home = New ManagePostsController();
-        $home->addPostAction();
-    });
-    $router->post('/backoffice/add', function () {
-        $home = New ManagePostsController();
-        $home->addPostAction();
+    $router->get('/posts/comments/:id', function ($id) {
+    $home = New PostsController();
+    $home->alertComments($id);
     });
 
-    $router->get('/backoffice/delete/:id', function ($id) {
-    $home = New ManagePostsController();
-    $home->deletePostAction($id);
-    });
-
-    $router->get('/backoffice/edit/:id', function ($id) {
-    $home = New ManagePostsController();
-    $home->editPostAction($id);
-    });
-
-    $router->post('/backoffice/edit/:id', function ($id) {
-    $home = New ManagePostsController();
-    $home->editPostAction($id);
-});
-
-    $router->get('/backoffice/comments', function () {
-        $comments = New ManagePostsController();
-        $comments->commentsAction();
+    $router->get('/posts/comments/:id', function ($id) {
+        $home = New PostsController();
+        $home->alertComments($id);
     });
 
     $router->checkingRoute();

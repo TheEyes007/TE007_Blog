@@ -8,7 +8,6 @@
 
 namespace App\Controller;
 
-
 use \App;
 use App\Repository\PostsRepository;
 use App\Form\PostsForm;
@@ -19,7 +18,7 @@ class ManagePostsController extends AppController
     {
         $request = new PostsRepository();
         $data = $request->allPosts('blog_posts');
-        $this->render('backend.home', compact('data'));
+        $this->render('backend.liste_articles', compact('data'));
     }
 
     public function addPostAction()
@@ -66,7 +65,7 @@ class ManagePostsController extends AppController
         } else {
             foreach($data as $ligne){
                 $form = new PostsForm();
-                $comments_form = $form->EditComment($ligne->title,$ligne->contains);
+                $comments_form = $form->EditPost($ligne->title,$ligne->contains);
             }
             $this->render('backend.editArticles', compact('comments_form'));
         }
@@ -77,7 +76,7 @@ class ManagePostsController extends AppController
     {
         $request = new PostsRepository();
         $data = $request->onePosts($id, 'blog_posts');
-        $this->render('backend.bo_articles', compact('data'));
+        $this->render('backend.one_article', compact('data'));
 
     }
 }
