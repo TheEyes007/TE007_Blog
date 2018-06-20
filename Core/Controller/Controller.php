@@ -21,4 +21,9 @@ class Controller
         $content = ob_get_clean();
         require($this->viewPath. $this->template.'.php');
     }
+
+    public function error404()
+    {
+        require_once ROOT . '/Core/Router/View/404.php';
+    }
 }

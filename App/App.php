@@ -6,8 +6,6 @@
  * Time: 19:29
  */
 
-use \Core\Auth\DbAuth;
-use \Core\Database\dbConnect;
 
 class App
 {
@@ -21,14 +19,14 @@ class App
                 return self::$_instance;
             }
 
-        public static function load(){
+        public static function load()
+        {
             require ROOT . '/App/Autoloader.php';
             App\Autoloader::register();
 
             require ROOT . '/Core/Autoloader.php';
             Core\Autoloader::register();
 
-            require ROOT . '/App/Config/router.php';
-        }
-
+            require_once ROOT . '/App/Config/router.php';
+         }
 }

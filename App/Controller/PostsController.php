@@ -17,14 +17,12 @@ class PostsController extends AppController
 {
     public function indexAction()
     {
+        session_start();
         $request = new PostsRepository();
         $data = $request->allPosts('blog_posts');
         $this->render('frontend.home', compact('data'));
     }
 
-    public function postsAction(){
-        $this->render('frontend.post');
-    }
 
     public function contactsAction(){
         $this->render('frontend.contacts');
@@ -32,6 +30,7 @@ class PostsController extends AppController
 
     public function articlesAction($id)
     {
+        session_start();
         $request = new PostsRepository();
         $request_comment = new CommentsRepository();
         $routing = New \Core\Router\Routing();
@@ -40,7 +39,7 @@ class PostsController extends AppController
 
         if (isset($_POST['addcomments'])) {
             if (!empty($_POST['titre']) AND !empty($_POST['commentaires'])) {
-                $request_comment->addComments(1, $id, htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments');
+                $request_comment->addComments($_SESSION['user_key'], $id, htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments');
                 $routing->redirectToRoute('posts/'.$id);
             } else {
                 echo "Vous n'avez pas saisi tous les champs du formulaires.";
@@ -63,7 +62,21 @@ class PostsController extends AppController
 
     public function registerAction()
     {
+        session_start();
         $registerUser = new \Core\ManageUser\Controller\ManageUserController();
         $user_request = $registerUser->register();
     }
+
+    public function loginAction()
+    {
+        $loginUser = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $loginUser->login();
+    }
+
+    public function logoutAction()
+    {
+        $loginUser = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $loginUser->logout();
+    }
+
 }

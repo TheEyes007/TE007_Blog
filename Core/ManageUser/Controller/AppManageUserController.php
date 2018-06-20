@@ -18,5 +18,4 @@ class AppManageUserController extends Controller
     {
         $this->viewPath = ROOT .'/Core/ManageUser/Views/';
     }
-
 }

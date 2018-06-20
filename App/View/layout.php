@@ -20,21 +20,31 @@
                 </button>
                 <a class="navbar-brand" href="/">Accueil</a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/backoffice">Gestion des articles</a></li>
-                    <li><a href="/backoffice/comments">Gestion des commentaires</a></li>
-                    <li><a href="/register">S'inscrire</a></li>
+                    <?php
+                        if(!empty($_SESSION)) {
+                            if (session_status() !== 2) {
+                                echo "<li><a href=\"/register\">S'inscrire</a></li>";
+                                echo "<li><a href=\"/login\">Se connecter</a></li>";
+                            } else {
+                                if($_SESSION['ROLE'] === '1') {
+                                    echo "<li><a href=\"/myaccount\">Mon compte</a></li>";
+                                    echo "<li><a href=\"/backoffice\">Gestion des articles</a></li>";
+                                    echo "<li><a href=\"/backoffice/comments\">Gestion des commentaires</a></li>";
+                                    echo "<li><a href=\"/logout\">Se déconnecter</a></li>";
+                                }else{
+                                    echo "<li><a href=\"/myaccount\">Mon compte</a></li>";
+                                    echo "<li><a href=\"/logout\">Se déconnecter</a></li>";
+                                }
+                            }
+                        }else{
+                                echo "<li><a href=\"/register\">S'inscrire</a></li>";
+                                echo "<li><a href=\"/login\">Se connecter</a></li>";
+                            }
+                    ?>
                 </ul>
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>

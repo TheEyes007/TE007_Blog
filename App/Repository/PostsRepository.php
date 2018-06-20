@@ -24,7 +24,7 @@ class PostsRepository
         return $response;
     }
 
-    public function addPosts($user = 1,$titre,$contain,$table)
+    public function addPosts($user,$titre,$contain,$table)
     {
         $this->table = $table;
         $req = 'INSERT INTO '.$table.'(fk_user,title,contains) VALUE (' . '\'' . $user . '\',\''. $titre . '\',\'' .  $contain .'\');';
@@ -51,7 +51,7 @@ class PostsRepository
     public function onePosts($id,$table)
     {
         $this->table = $table;
-        $req = 'SELECT * FROM '.$table.' where id = '.$id.';';
+        $req = 'SELECT * FROM '.$table.' INNER JOIN blog_users ON fk_user = blog_users.id where blog_posts.id = '.$id.';';
         $db_connect = new Parameters();
         $response = $db_connect->getConnectDb()->getQuery($req);
         return $response;

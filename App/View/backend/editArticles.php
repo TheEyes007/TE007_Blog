@@ -1,7 +1,5 @@
 <?php
 
-use App\Form\PostsForm;
-
 $title = 'Mon blog';
 
 ob_start();
