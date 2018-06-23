@@ -37,6 +37,11 @@ ob_start();
             <a class="btn btn-warning float-left" style="margin-right:3px;" href="/">Retour</a>
         </form>
     </div>
+    <?php else: ?>
+    <div class="row inline-block">
+        <h4 class="edit-new-posts">Vous devez être inscrits pour laisser votre commentaire</h4>
+        <hr/>
+    </div>
     <?php endif; ?>
     <br/>
     <div class="row inline-block">
@@ -44,7 +49,14 @@ ob_start();
         <hr/>
         <?php
             foreach ($data_comments as $value) {
-                echo "<h5>" . $value->title . '<a href="comments/'. $value->id .'" class="btn btn-danger float-right" title="Signaler"><span class="glyphicon glyphicon-flag"></span></a></h5>';
+                if($value->alert === '0')
+                {
+                    echo "<h5>" . $value->title . '<a href="comments/'. $value->id .'" class="btn btn-success float-right" title="Signaler"><span class="glyphicon glyphicon-flag"></span></a></h5>';
+                }
+                else
+                {
+                    echo "<h5>" . $value->title . '<a href="comments/'. $value->id .'" class="btn btn-danger float-right" title="Ne pas signaler"><span class="glyphicon glyphicon-flag"></span></a></h5>';
+                }
                 echo "<p>Commentaire n°" . $value->id . " écrit le " . $value->date_create . " par ". $value->name .".</p>";
                 if($value->date_update != NULL) {
                     echo "<p>Date de la dernière mise à jour : ".$value->date_update."</p>";

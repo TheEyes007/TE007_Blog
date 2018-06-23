@@ -11,11 +11,7 @@
                 <div class="row">
                     <div class="title"><h2><?= $value->title ?></h2></div>
                     <?php
-                    if ($value->fk_user === '1') {
-                        echo "<p>Article n°" . $value->id . " écrit le " . $value->date_create . " par Administrateur.</p>";
-                    } else {
-                        echo "<p>Article n°" . $value->id . " écrit le " . $value->date_create . " par Anonyme.</p>";
-                    }
+                    echo "<p>Article n°" . $value->id . " écrit le " . $value->date_create . " par ". $value->name .".</p>";
                     if($value->date_update != NULL) {
                         echo "<p>Date de la dernière mise à jour : ".$value->date_update."</p>";
                     }

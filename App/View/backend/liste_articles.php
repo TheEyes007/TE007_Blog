@@ -30,7 +30,7 @@
                     <td><?php echo substr($ligne->contains,0,100); ?></td>
                     <td><?php echo $ligne->date_create; ?></td>
                     <td><?php echo $ligne->date_update; ?></td>
-                    <td><?php if($ligne->fk_user === '1')echo "Administrateur"; ?></td>
+                    <td><?php echo $ligne->name; ?></td>
                     <td><a class="btn btn-info btn-circle" href="<?= "backoffice/views/".$ligne->id; ?>"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
                     <td><a class="btn btn-warning btn-circle" href="<?= "backoffice/edit/".$ligne->id; ?>"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
                     <td><a class="btn btn-danger btn-circle" href="<?= "backoffice/delete/".$ligne->id; ?>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>

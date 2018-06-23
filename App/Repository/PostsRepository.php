@@ -18,7 +18,7 @@ class PostsRepository
     public function allPosts($table)
     {
         $this->table = $table;
-        $req = 'SELECT * FROM '.$table.';';
+        $req = 'SELECT '.$table.'.id,'.$table.'.title,'.$table.'.contains,'.$table.'.date_create,'.$table.'.date_update,'.'blog_users.name FROM '.$table.' INNER JOIN blog_users ON fk_user = blog_users.id;';
         $db_connect = new Parameters();
         $response = $db_connect->getConnectDb()->getQuery($req);
         return $response;
@@ -59,7 +59,7 @@ class PostsRepository
 
     public function commentsByArticle($id)
     {
-        $req = 'SELECT blog_comments.id,blog_comments.title,blog_comments.contains,alert,blog_comments.date_create,blog_comments.date_update,blog_users.name,blog_posts.title FROM blog_comments ';
+        $req = 'SELECT blog_comments.id,blog_comments.title_comments,blog_comments.contains,alert,blog_comments.date_create,blog_comments.date_update,blog_users.name,blog_posts.title FROM blog_comments ';
         $req .= 'left join blog_posts on blog_posts.id = blog_comments.fk_posts ';
         $req .= 'left join blog_users on blog_users.id = blog_comments.fk_user ';
         $req .= 'WHERE blog_comments.fk_posts = \''. $id .'\' ';

@@ -156,7 +156,6 @@ class ManageUserController extends AppManageUserController
             session_start();
             if (!empty($_SESSION)) {
                 $request = new UserRepository();
-                $routing = New \Core\Router\Routing();
                 $data_form = $request->oneUser(intval($_SESSION['user_key']), 'blog_users');
 
                 if (isset($_POST['edituser'])) {
@@ -198,6 +197,105 @@ class ManageUserController extends AppManageUserController
                         $user_form = $form->EditUser($ligne->name, $ligne->email);
                     }
                     $this->render('backend.edit',compact('user_form'));
+                }
+            } else {
+                $routing->redirectToRoute('404');
+            }
+        }
+    }
+
+    public function UserAccountDelete()
+    {
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                if ($_SESSION['ROLE'] != '1') {
+                    $request = new UserRepository();
+                    $request->deleteUser(htmlspecialchars($_SESSION['user_key']), 'blog_users');
+                    $this->logout();
+                    $routing->redirectToRoute('');
+                } else {
+                    $routing->redirectToRoute('security');
+                }
+            } else {
+                $routing->redirectToRoute('404');
+            }
+        }
+    }
+
+    public function CommentsByUser()
+    {
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                $request = new UserRepository();
+                $data = $request->allCommentsByUser($_SESSION['user_key']);
+                $this->render('backend.usercomments', compact('data'));
+            } else {
+                $routing->redirectToRoute('404');
+            }
+        }
+    }
+
+    public function CommentsDeleteByUser($id)
+    {
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                    $request = new UserRepository();
+                    $request->deleteComments($id,'blog_comments',$_SESSION['user_key']);
+                    $routing->redirectToRoute('myaccount/comments');
+            } else {
+                $routing->redirectToRoute('404');
+            }
+        }
+    }
+
+    public function CommentsViewByUser($id)
+    {
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                    $request = new UserRepository();
+                    $data = $request->oneCommentsByUser($id,$_SESSION['user_key']);
+                    $this->render('backend.onecommentsuser', compact('data'));
+            } else {
+                $routing->redirectToRoute('404');
+            }
+        }
+    }
+
+    public function CommentsEditByUser($id)
+    {
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                if ($_SESSION['ROLE'] != '1') {
+                    $request = new UserRepository();
+                    $data = $request->oneCommentsByUser($id,$_SESSION['user_key'] ,'blog_posts');
+
+                    if (isset($_POST['editcomments'])) {
+                        if (!empty($_POST['titre']) AND !empty($_POST['commentaires'])) {
+                            $request->updateComments(htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments', $id,intval($_SESSION['user_key']));
+                            $routing->redirectToRoute('backoffice');
+                        } else {
+                            echo "Vous n'avez pas saisi tous les champs du formulaires.";
+                            $this->render('backend.onecommentsuseredit');
+                        }
+                    } else {
+                        foreach ($data as $ligne) {
+                            $form = new ManageUserForm();
+                            $comments_form = $form->EditComment($ligne->title, $ligne->contains);
+                        }
+                        $this->render('backend.onecommentsuseredit', compact('comments_form'));
+                    }
+                } else {
+                    $routing->redirectToRoute('404');
                 }
             } else {
                 $routing->redirectToRoute('404');

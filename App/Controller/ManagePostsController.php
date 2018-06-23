@@ -146,4 +146,34 @@ class ManagePostsController extends AppController
         $accountUser = new \Core\ManageUser\Controller\ManageUserController();
         $user_request = $accountUser->UserAccountEdit();
     }
+
+    public function accountDeleteAction()
+    {
+        $loginUser = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $loginUser->UserAccountDelete();
+    }
+
+    public function accountCommentsAction()
+    {
+        $loginUser = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $loginUser->CommentsByUser();
+    }
+
+    public function accountDeleteCommentsAction($id)
+    {
+        $loginUser = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $loginUser->CommentsDeleteByUser($id);
+    }
+
+    public function accountViewCommentsAction($id)
+    {
+        $loginUser = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $loginUser->CommentsViewByUser($id);
+    }
+
+    public function accountEditCommentsAction($id)
+    {
+        $loginUser = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $loginUser->CommentsEditByUser($id);
+    }
 }

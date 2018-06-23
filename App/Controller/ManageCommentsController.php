@@ -17,7 +17,6 @@ class ManageCommentsController extends AppController
     public function indexAction()
     {
         $routing = New \Core\Router\Routing();
-        if (!session_id()) {
             session_start();
             if (!empty($_SESSION)) {
                 if ($_SESSION['ROLE'] === '1') {
@@ -30,7 +29,6 @@ class ManageCommentsController extends AppController
             } else {
                 $routing->redirectToRoute('404');
             }
-        }
     }
 
     public function deleteCommentsAction($id)
@@ -61,14 +59,19 @@ class ManageCommentsController extends AppController
                 if ($_SESSION['ROLE'] === '1') {
                     $request = new CommentsRepository();
                     $data = $request->alertSelectComments(htmlspecialchars($id),'blog_comments');
-
+                    $verifComments = $request->alertControlCountComments($id, $_SESSION['user_key']);
                     if ($data[0]->alert === '0')
                         {
-                            $request->alertComments('1', htmlspecialchars($id), 'blog_comments');
+                            if (intval($verifComments[0]->nbalertcomments) === 0) {
+                                $request->addAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
+                                $request->alertComments('1', htmlspecialchars($id), 'blog_comments');
+                                }
                         }
                     else
                         {
                             $request->alertComments('0', htmlspecialchars($id), 'blog_comments');
+                            $request->AdminDeleteAlertComments($id,'blog_warningcomments');
+                            $request->InitDeleteAlertComments();
                         }
 
                     $routing->redirectToRoute('backoffice/comments');
@@ -81,7 +84,7 @@ class ManageCommentsController extends AppController
         }
     }
 
-    public function onePostAction($id)
+    public function oneCommentsAction($id)
     {
         $routing = New \Core\Router\Routing();
         if (!session_id()) {
@@ -100,4 +103,5 @@ class ManageCommentsController extends AppController
             }
         }
     }
+
 }

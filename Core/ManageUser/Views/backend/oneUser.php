@@ -14,7 +14,15 @@ ob_start();
         <div class="row inline-block">
             <?php foreach($data as $value): ?>
             <h4 class="edit-new-posts">Compte personnel de <?= $value->name ?>
+            <?php
+                 if(!empty($_SESSION)) {
+                     if ($_SESSION['ROLE'] != '1') {
+                         echo '<a class="btn btn-danger float-right" style="margin-left:3px;" href="/myaccount/delete">Supprimer votre compte</a>';
+                    }
+                 }
+            ?>
                     <a class="btn btn-success float-right" style="margin-left:3px;" href="/myaccount/edit">Editer votre compte</a>
+                    <a class="btn btn-success float-right" style="margin-left:3px;" href="/myaccount/comments">Lister vos commentaires</a>
                     <a class="btn btn-warning float-right" href="/">Retour</a>
             </h4>
             <hr/>

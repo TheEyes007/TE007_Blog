@@ -21,12 +21,4 @@ class CommentsForm
         return $form_new;
     }
 
-    public function EditComment($titre,$contain){
-        $form = new FormType();
-        $form_edit = [];
-        $form_edit [] = $form->input('titre','text','Titre de votre commentaire','form-control','titre','Titre du commentaire','form-group',$titre);
-        $form_edit [] = $form->textArea('commentaires','commentaires','form-control',10,50,$contain,'commentaires','Saisir votre commentaire','form-group');
-        $form_edit [] = $form->submit('edicomments','btn btn-success');
-        return $form_edit;
-    }
 }

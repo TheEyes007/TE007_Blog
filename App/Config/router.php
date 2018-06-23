@@ -64,9 +64,8 @@ $router = new \Core\Router\Router($_GET['url']);
 
         $router->get('/backoffice/comments/views/:id', function ($id) {
             $home = New ManageCommentsController();
-            $home->onePostAction($id);
+            $home->oneCommentsAction($id);
         });
-
 
         $router->get('/myaccount', function () {
             $home = New ManagePostsController();
@@ -78,10 +77,35 @@ $router = new \Core\Router\Router($_GET['url']);
             $home->accountEditAction();
         });
 
-        $router->post('/myaccount/edit', function () {
-            $home = New ManagePostsController();
-            $home->accountEditAction();
-        });
+    $router->get('/myaccount/delete', function () {
+        $home = New ManagePostsController();
+        $home->accountDeleteAction();
+    });
+
+    $router->get('/myaccount/comments', function () {
+        $home = New ManagePostsController();
+        $home->accountCommentsAction();
+    });
+
+    $router->get('/myaccount/comments/delete/:id', function ($id) {
+        $home = New ManagePostsController();
+        $home->accountDeleteCommentsAction($id);
+    });
+
+    $router->get('/myaccount/comments/views/:id', function ($id) {
+        $home = New ManagePostsController();
+        $home->accountViewCommentsAction($id);
+    });
+
+    $router->get('/myaccount/comments/edit/:id', function ($id) {
+        $home = New ManagePostsController();
+        $home->accountEditCommentsAction($id);
+    });
+
+    $router->post('/myaccount/comments/edit/:id', function ($id) {
+        $home = New ManagePostsController();
+        $home->accountEditCommentsAction($id);
+    });
 
         // Frontoffice
     $router->get('/', function () {
@@ -134,11 +158,6 @@ $router = new \Core\Router\Router($_GET['url']);
     });
 
     $router->get('/posts/comments/:id', function ($id) {
-    $home = New PostsController();
-    $home->alertComments($id);
-    });
-
-    $router->get('/posts/comments/:id', function ($id) {
         $home = New PostsController();
         $home->alertComments($id);
     });
@@ -147,6 +166,11 @@ $router = new \Core\Router\Router($_GET['url']);
     $router->get('/404', function () {
         $error404 = New \Core\Controller\Controller();
         $error404->error404();
+    });
+
+    $router->get('/security', function () {
+        $errorsecurity = New \Core\Controller\Controller();
+        $errorsecurity->security();
     });
 
     $router->checkingRoute();

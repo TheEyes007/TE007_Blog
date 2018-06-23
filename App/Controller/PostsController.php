@@ -17,10 +17,12 @@ class PostsController extends AppController
 {
     public function indexAction()
     {
-        session_start();
-        $request = new PostsRepository();
-        $data = $request->allPosts('blog_posts');
-        $this->render('frontend.home', compact('data'));
+        if (!session_id()) {
+            session_start();
+            $request = new PostsRepository();
+            $data = $request->allPosts('blog_posts');
+            $this->render('frontend.home', compact('data'));
+        }
     }
 
 
@@ -30,39 +32,61 @@ class PostsController extends AppController
 
     public function articlesAction($id)
     {
-        session_start();
         $request = new PostsRepository();
         $request_comment = new CommentsRepository();
         $routing = New \Core\Router\Routing();
         $data_comments = $request->commentsByArticle($id);
         $data = $request->onePosts($id, 'blog_posts');
-
-        if (isset($_POST['addcomments'])) {
-            if (!empty($_POST['titre']) AND !empty($_POST['commentaires'])) {
-                $request_comment->addComments($_SESSION['user_key'], $id, htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments');
-                $routing->redirectToRoute('posts/'.$id);
-            } else {
-                echo "Vous n'avez pas saisi tous les champs du formulaires.";
-                $this->render('frontend.articles', compact('data','data_comments','data_alert'));
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                if (isset($_POST['addcomments'])) {
+                    if (!empty($_POST['titre']) AND !empty($_POST['commentaires'])) {
+                        $request_comment->addComments($_SESSION['user_key'], $id, htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments');
+                        $routing->redirectToRoute('posts/' . $id);
+                    } else {
+                        echo "Vous n'avez pas saisi tous les champs du formulaires.";
+                        $this->render('frontend.articles', compact('data', 'data_comments', 'data_alert'));
+                    }
+                } else {
+                    $this->render('frontend.articles', compact('data', 'data_comments', 'data_alert'));
+                }
             }
-        } else {
-            $this->render('frontend.articles', compact('data','data_comments','data_alert'));
         }
-
     }
 
     public function alertComments($id)
     {
         $routing = New \Core\Router\Routing();
-        $request_comment = new CommentsRepository();
 
-        $request_comment->countAlertComments($id,'blog_comments');
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                $request_comment = new CommentsRepository();
+                $verifComments = $request_comment->alertControlCountComments($id, $_SESSION['user_key']);
+                $countAlert = $request_comment->alertSelectComments($id);
+                if (intval($verifComments[0]->nbalertcomments) === 0) {
+                    $request_comment->addAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
+                    if(intval($countAlert[0]->nb_alert) === 0){
+                        $request_comment->alertComments('1',$id,'blog_comments');
+                    }
+                } else {
+                    if(intval($countAlert[0]->nb_alert) === 1) {
+                        $request_comment->deleteAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
+                        $request_comment->InitDeleteAlertComments();
+                        $request_comment->alertComments('0', $id, 'blog_comments');
+                    }
+                    else{
+                        $request_comment->deleteAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
+                    }
+                }
+            }
+        }
         $routing->redirectPreviousRoute();
     }
 
     public function registerAction()
     {
-        session_start();
         $registerUser = new \Core\ManageUser\Controller\ManageUserController();
         $user_request = $registerUser->register();
     }
@@ -78,5 +102,4 @@ class PostsController extends AppController
         $loginUser = new \Core\ManageUser\Controller\ManageUserController();
         $user_request = $loginUser->logout();
     }
-
 }

@@ -26,4 +26,9 @@ class Controller
     {
         require_once ROOT . '/Core/Router/View/404.php';
     }
+
+    public function security()
+    {
+        require_once ROOT . '/Core/Router/View/security.php';
+    }
 }
