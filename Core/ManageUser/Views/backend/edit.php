@@ -18,5 +18,7 @@ ob_start();
                 <a class="btn btn-warning float-left" href="/myaccount">Retour</a>
             </form>
         </div>
+    </div>
+</div>
 
 <?php $body = ob_get_clean(); require(ROOT . '/Core/ManageUser/Views/layout.php'); ?>

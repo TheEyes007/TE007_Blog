@@ -133,6 +133,16 @@ $router = new \Core\Router\Router($_GET['url']);
         $home->indexAction();
     });
 
+    $router->get('/contact', function () {
+        $home = New PostsController();
+        $home->contactAction();
+    });
+
+    $router->post('/contact', function () {
+        $home = New PostsController();
+        $home->contactAction();
+    });
+
     $router->get('/login', function () {
         $home = New PostsController();
         $home->loginAction();

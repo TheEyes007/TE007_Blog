@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -28,27 +28,49 @@
                     if (session_status() !== 2) {
                         echo "<li><a href=\"/register\">S'inscrire</a></li>";
                         echo "<li><a href=\"/login\">Se connecter</a></li>";
+                        echo "<li><a href=\"/contact\">Contact</a></li>";
                     } else {
                         if($_SESSION['ROLE'] === '1') {
                             echo "<li><a href=\"/myaccount\">Mon compte</a></li>";
                             echo "<li><a href=\"/backoffice\">Gestion des articles</a></li>";
                             echo "<li><a href=\"/backoffice/comments\">Gestion des commentaires</a></li>";
+                            echo "<li><a href=\"/backoffice/users\">Gestion des utilisateurs</a></li>";
                             echo "<li><a href=\"/logout\">Se déconnecter</a></li>";
                         }else{
                             echo "<li><a href=\"/myaccount\">Mon compte</a></li>";
                             echo "<li><a href=\"/logout\">Se déconnecter</a></li>";
+                            echo "<li><a href=\"/contact\">Contact</a></li>";
                         }
                     }
                 }else{
                     echo "<li><a href=\"/register\">S'inscrire</a></li>";
                     echo "<li><a href=\"/login\">Se connecter</a></li>";
+                    echo "<li><a href=\"/contact\">Contact</a></li>";
                 }
                 ?>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-<?= $body ?>
+<div class="box">
+    <?= $body ?>
+</div>
+<footer id="footer-Section">
+    <div class="footer-top-layout">
+        <div class="container">
+            <div class="row">
+                <div class="OurBlog">
+                    <h4>Jean Forteroche vous présente son roman en ligne, Billet simple pour l'Alaska</h4>
+                    <p>Suivez mon périple au fil de mes chapitres</p>
+                    <div class="post-blog-date">Debut du livre le 26 juin 2018</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-layout">
+        <div class="copyright-tag">Copyright © 2017 company name. All Rights Reserved.</div>
+    </div>
+</footer>
 <script src="/vendor/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="/vendor/tinymce/js/tinymce/tinymce.min.js"></script>

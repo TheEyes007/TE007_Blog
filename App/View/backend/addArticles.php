@@ -23,6 +23,8 @@ ob_start();
                 <a class="btn btn-warning float-left" href="/backoffice">Retour</a>
             </form>
         </div>
+    </div>
+</div>
 
 <?php
     $body = ob_get_clean();

@@ -25,6 +25,49 @@ class PostsController extends AppController
         }
     }
 
+    public function contactAction()
+    {
+        if (!session_id()) {
+            session_start();
+            $routing = New \Core\Router\Routing();
+            if (isset($_POST['addmessage'])) {
+                if (!empty($_POST['nom']) AND !empty($_POST['email']) AND !empty($_POST['message'])) {
+                    // Plusieurs destinataires
+                    $to  = 'matvib1983@live.fr'; // notez la virgule
+
+                    // Sujet
+                    $subject = 'Contact billet simple pour l\'alaska de '.htmlspecialchars($_POST['nom']);
+
+                    // message
+                    $message = '
+                                 <html>
+                                  <head>
+                                   <title>Contact du blog billet simple pour l\'alaska</title>
+                                  </head>
+                                  <body>
+                                   <p>'. htmlspecialchars($_POST['message']).'</p>
+                                  </body>
+                                 </html>
+                                 ';
+
+                    // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+                    $headers[] = 'MIME-Version: 1.0';
+                    $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+                    $headers[] = 'From: '.htmlspecialchars($_POST['email']);
+
+                    // Envoi
+                    mail($to, $subject, $message, implode("\r\n", $headers));
+                    $routing->redirectToRoute('');
+                } else {
+                    echo "Vous n'avez pas saisi tous les champs du formulaires.";
+                    $routing->redirectToRoute('');
+                }
+            }else{
+                $this->render('frontend.contacts');
+            }
+        }
+    }
+
 
     public function contactsAction(){
         $this->render('frontend.contacts');

@@ -2,10 +2,6 @@
 <?php ob_start(); ?>
 <div class="container">
     <div class="row">
-        <div clas="inline-block">
-            <h4>Listes des articles</h4>
-        </div>
-        <hr/>
         <div class="center-align article-list">
             <?php foreach($data as $value): ?>
                 <div class="row">
