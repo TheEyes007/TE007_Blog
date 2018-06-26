@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <h4>Liste des commentaires
-            <a class="btn btn-warning float-right" href="/backoffice">Retour</a>
+            <a class="btn btn-warning float-right" href="/myaccount">Retour</a>
         </h4>
         <hr/>
         <div class="center-align">

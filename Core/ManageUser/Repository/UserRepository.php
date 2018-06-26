@@ -14,12 +14,21 @@ class UserRepository
 {
     private $table;
 
+    public function allUsers($table)
+    {
+        $this->table = $table;
+        $req = 'SELECT * FROM '.$table.';';
+        $db_connect = new Parameters();
+        $response = $db_connect->getConnectDb()->getPrepare($req);
+        return $response;
+    }
+
     public function addUser($name,$name_canonical,$email,$status,$active,$password,$salt,$table)
     {
         $this->table = $table;
         $req = 'INSERT INTO '.$table.'(name,name_canonical,email,status,active,password,salt) VALUE (' . '\'' . $name . '\',\''. $name_canonical . '\',\'' .  $email . '\',\'' . $status . '\',\'' . $active . '\',\'' .  crypt ($password,$salt). '\',\'' . $salt .'\');';
         $db_connect = new Parameters();
-        $db_connect->getConnectDb()->getPDO()->query($req);
+        $db_connect->getConnectDb()->getPDO()->prepare($req)->execute();
     }
 
     public function loginUser($login,$table)
@@ -27,7 +36,7 @@ class UserRepository
         $this->table = $table;
         $req = 'SELECT id,name, password, salt,status,active FROM '.$table.' WHERE name = \''.$login.'\';';
         $db_connect = new Parameters();
-        $response = $db_connect->getConnectDb()->getQuery($req);
+        $response = $db_connect->getConnectDb()->getPrepare($req);
         return $response;
     }
 
@@ -36,7 +45,7 @@ class UserRepository
         $this->table = $table;
         $req = 'SELECT count(name_canonical) as nb_login FROM '.$table.' WHERE name_canonical = \''.$login.'\';';
         $db_connect = new Parameters();
-        $response = $db_connect->getConnectDb()->getQuery($req);
+        $response = $db_connect->getConnectDb()->getPrepare($req);
         return $response;
     }
 
@@ -45,7 +54,7 @@ class UserRepository
         $this->table = $table;
         $req = 'SELECT * FROM '.$table.' where id = '.$id.';';
         $db_connect = new Parameters();
-        $response = $db_connect->getConnectDb()->getQuery($req);
+        $response = $db_connect->getConnectDb()->getPrepare($req);
         return $response;
     }
 
@@ -55,7 +64,7 @@ class UserRepository
         $req = "UPDATE ".$table." set name = '". $name ."',name_canonical = '". $name_canonical ."',email = '". $email  ."',password = '";
         $req .= crypt ($password,$salt)."',salt = '".$salt."' WHERE id = ". $id .";";
         $db_connect = new Parameters();
-        $db_connect->getConnectDb()->getPDO()->query($req);
+        $db_connect->getConnectDb()->getPDO()->prepare($req)->execute();
     }
 
     public function deleteUser($id,$table)
@@ -63,7 +72,15 @@ class UserRepository
         $this->table = $table;
         $req = 'DELETE FROM '.$table.' WHERE id = ' .$id .';';
         $db_connect = new Parameters();
-        $db_connect->getConnectDb()->getPDO()->query($req);
+        $db_connect->getConnectDb()->getPDO()->prepare($req)->execute();
+    }
+
+    public function activateUser($id,$table)
+    {
+        $this->table = $table;
+        $req = 'UPDATE '.$table.' set active = \'1\' WHERE id = ' .$id .';';
+        $db_connect = new Parameters();
+        $db_connect->getConnectDb()->getPDO()->prepare($req)->execute();
     }
 
     public function allCommentsByUser($userid)
@@ -74,7 +91,7 @@ class UserRepository
         $req .= 'WHERE blog_users.id = '. $userid .' ';
         $req .= 'Order by alert DESC,blog_comments.date_update DESC ,blog_comments.date_create DESC;';
         $db_connect = new Parameters();
-        $response = $db_connect->getConnectDb()->getQuery($req);
+        $response = $db_connect->getConnectDb()->getPrepare($req);
         return $response;
     }
 
@@ -83,7 +100,7 @@ class UserRepository
         $this->table = $table;
         $req = 'DELETE FROM '.$table.' WHERE id = ' .$id .' AND fk_user = '. $user .';';
         $db_connect = new Parameters();
-        $db_connect->getConnectDb()->getPDO()->query($req);
+        $db_connect->getConnectDb()->getPDO()->prepare($req)->execute();
     }
 
     public function oneCommentsByUser($id,$userid)
@@ -94,7 +111,7 @@ class UserRepository
         $req .= 'WHERE blog_users.id = '. $userid .' AND blog_comments.id = '. $id .' ';
         $req .= 'Order by alert DESC,blog_comments.date_update DESC ,blog_comments.date_create DESC;';
         $db_connect = new Parameters();
-        $response = $db_connect->getConnectDb()->getQuery($req);
+        $response = $db_connect->getConnectDb()->getPrepare($req);
         return $response;
     }
 
@@ -103,6 +120,6 @@ class UserRepository
         $this->table = $table;
         $req = 'UPDATE '.$table.' set fk_user = '.$userid.', title_comments = '.'\''.$titre.'\', contains = '.'\''.$contain.'\' where id = '.$id.';';
         $db_connect = new Parameters();
-        $db_connect->getConnectDb()->getPDO()->query($req);
+        $db_connect->getConnectDb()->getPDO()->prepare($req)->execute();
     }
 }

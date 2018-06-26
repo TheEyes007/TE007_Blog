@@ -26,8 +26,20 @@
                         <td><?php echo $ligne->id; ?></td>
                         <td><?php echo $ligne->title; ?></td>
                         <td><?php echo substr($ligne->contains,0,100); ?></td>
-                        <td><?php echo $ligne->date_create; ?></td>
-                        <td><?php echo $ligne->date_update; ?></td>
+                        <td>
+                            <?php
+                            $date = DateTime::createFromFormat('Y-m-d H:i:s', $ligne->date_create);
+                            echo date_format($date,'d/m/Y H:i:s');
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            if($ligne->date_update != NULL){
+                                $date = DateTime::createFromFormat('Y-m-d H:i:s', $ligne->date_update);
+                                echo date_format($date,'d/m/Y H:i:s');
+                            }
+                            ?>
+                        </td>
                         <td><?php echo $ligne->name ?></td>
                         <td>
                             <?php

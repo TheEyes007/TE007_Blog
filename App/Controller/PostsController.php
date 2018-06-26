@@ -35,22 +35,24 @@ class PostsController extends AppController
         $request = new PostsRepository();
         $request_comment = new CommentsRepository();
         $routing = New \Core\Router\Routing();
-        $data_comments = $request->commentsByArticle($id);
         $data = $request->onePosts($id, 'blog_posts');
+        $data_comments = $request->commentsByArticle($id);
         if (!session_id()) {
             session_start();
             if (!empty($_SESSION)) {
                 if (isset($_POST['addcomments'])) {
                     if (!empty($_POST['titre']) AND !empty($_POST['commentaires'])) {
-                        $request_comment->addComments($_SESSION['user_key'], $id, htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments');
+                        $request_comment->addComments(htmlspecialchars($_SESSION['user_key']), htmlspecialchars($id), htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments');
                         $routing->redirectToRoute('posts/' . $id);
                     } else {
                         echo "Vous n'avez pas saisi tous les champs du formulaires.";
-                        $this->render('frontend.articles', compact('data', 'data_comments', 'data_alert'));
+                        $this->render('frontend.articles', compact('data', 'data_comments'));
                     }
                 } else {
-                    $this->render('frontend.articles', compact('data', 'data_comments', 'data_alert'));
+                    $this->render('frontend.articles', compact('data', 'data_comments'));
                 }
+            }else{
+                $this->render('frontend.articles', compact('data', 'data_comments'));
             }
         }
     }
@@ -63,22 +65,20 @@ class PostsController extends AppController
             session_start();
             if (!empty($_SESSION)) {
                 $request_comment = new CommentsRepository();
-                $verifComments = $request_comment->alertControlCountComments($id, $_SESSION['user_key']);
-                $countAlert = $request_comment->alertSelectComments($id);
-                if (intval($verifComments[0]->nbalertcomments) === 0) {
-                    $request_comment->addAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
-                    if(intval($countAlert[0]->nb_alert) === 0){
-                        $request_comment->alertComments('1',$id,'blog_comments');
-                    }
-                } else {
-                    if(intval($countAlert[0]->nb_alert) === 1) {
-                        $request_comment->deleteAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
-                        $request_comment->InitDeleteAlertComments();
-                        $request_comment->alertComments('0', $id, 'blog_comments');
+                $countComments = $request_comment->alertControlCountComments(htmlspecialchars($id), htmlspecialchars($_SESSION['user_key']));
+                $nbNbAlert = $request_comment->alertSelectComments(htmlspecialchars($id));
+                if (intval($countComments[0]->nbalertcomments) > 0) {
+                    if(intval($nbNbAlert[0]->nb_alert) === 1) {
+                        $request_comment->alertComments('0', htmlspecialchars($id), 'blog_comments');
+                        $request_comment->deleteAlertComments(htmlspecialchars($id),htmlspecialchars($_SESSION['user_key']),'blog_warningcomments');
+                        $request_comment->deleteNbAlertComments();
                     }
                     else{
-                        $request_comment->deleteAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
+                        $request_comment->deleteAlertComments(htmlspecialchars($id),htmlspecialchars($_SESSION['user_key']),'blog_warningcomments');
                     }
+                } else {
+                    $request_comment->addAlertComments(htmlspecialchars($id),htmlspecialchars($_SESSION['user_key']),'blog_warningcomments');
+                    $request_comment->alertComments('1',htmlspecialchars($id),'blog_comments');
                 }
             }
         }

@@ -33,6 +33,7 @@
                                     echo "<li><a href=\"/myaccount\">Mon compte</a></li>";
                                     echo "<li><a href=\"/backoffice\">Gestion des articles</a></li>";
                                     echo "<li><a href=\"/backoffice/comments\">Gestion des commentaires</a></li>";
+                                    echo "<li><a href=\"/backoffice/users\">Gestion des utilisateurs</a></li>";
                                     echo "<li><a href=\"/logout\">Se déconnecter</a></li>";
                                 }else{
                                     echo "<li><a href=\"/myaccount\">Mon compte</a></li>";

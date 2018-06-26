@@ -78,7 +78,7 @@ class ManageUserController extends AppManageUserController
                 if($nb_login === 0)
                 {
                     if (htmlspecialchars(addslashes($_POST['password'])) === htmlspecialchars(addslashes($_POST['confirm_password']))) {
-                        if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
+                        if (htmlspecialchars(filter_var($_POST['email']), FILTER_VALIDATE_EMAIL) === false) {
                             echo '<div class="alert alert-warning text-center">Votre adresse n\'est pas conforme.</div>';
                             $this->render('frontend.register');
                         } else {
@@ -140,7 +140,7 @@ class ManageUserController extends AppManageUserController
             session_start();
             if (!empty($_SESSION)) {
                     $request = new UserRepository();
-                    $data = $request->oneUser($_SESSION['user_key'], 'blog_users');
+                    $data = $request->oneUser(htmlspecialchars($_SESSION['user_key']), 'blog_users');
                     $this->render('backend.oneUser', compact('data'));
 
             } else {
@@ -162,7 +162,7 @@ class ManageUserController extends AppManageUserController
                     if (!empty($_POST['login']) AND !empty($_POST['password']) AND !empty($_POST['confirm_password']) AND !empty($_POST['email']))
                     {
                             if (htmlspecialchars(addslashes($_POST['password'])) === htmlspecialchars(addslashes($_POST['confirm_password']))) {
-                                if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
+                                if (htmlspecialchars(filter_var($_POST['email']), FILTER_VALIDATE_EMAIL) === false) {
                                     echo '<div class="alert alert-warning text-center">Votre adresse n\'est pas conforme.</div>';
                                     $this->render('frontend.register');
                                 } else {
@@ -172,7 +172,7 @@ class ManageUserController extends AppManageUserController
                                         htmlspecialchars(addslashes($_POST['email'])),
                                         htmlspecialchars(addslashes($_POST['password'])),
                                         sha1(microtime(true)),
-                                        'blog_users',$_SESSION['user_key']);
+                                        'blog_users',htmlspecialchars($_SESSION['user_key']));
                                     $routing->redirectToRoute('');
                                 }
                             } else {
@@ -246,7 +246,7 @@ class ManageUserController extends AppManageUserController
             session_start();
             if (!empty($_SESSION)) {
                     $request = new UserRepository();
-                    $request->deleteComments($id,'blog_comments',$_SESSION['user_key']);
+                    $request->deleteComments($id,'blog_comments',htmlspecialchars($_SESSION['user_key']));
                     $routing->redirectToRoute('myaccount/comments');
             } else {
                 $routing->redirectToRoute('404');
@@ -261,7 +261,7 @@ class ManageUserController extends AppManageUserController
             session_start();
             if (!empty($_SESSION)) {
                     $request = new UserRepository();
-                    $data = $request->oneCommentsByUser($id,$_SESSION['user_key']);
+                    $data = $request->oneCommentsByUser($id,htmlspecialchars($_SESSION['user_key']));
                     $this->render('backend.onecommentsuser', compact('data'));
             } else {
                 $routing->redirectToRoute('404');
@@ -277,12 +277,12 @@ class ManageUserController extends AppManageUserController
             if (!empty($_SESSION)) {
                 if ($_SESSION['ROLE'] != '1') {
                     $request = new UserRepository();
-                    $data = $request->oneCommentsByUser($id,$_SESSION['user_key'] ,'blog_posts');
+                    $data = $request->oneCommentsByUser(htmlspecialchars($id),htmlspecialchars($_SESSION['user_key']));
 
                     if (isset($_POST['editcomments'])) {
                         if (!empty($_POST['titre']) AND !empty($_POST['commentaires'])) {
-                            $request->updateComments(htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments', $id,intval($_SESSION['user_key']));
-                            $routing->redirectToRoute('backoffice');
+                            $request->updateComments(htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['commentaires'])), 'blog_comments', htmlspecialchars($id),intval(htmlspecialchars($_SESSION['user_key'])));
+                            $routing->redirectToRoute('myaccount/comments');
                         } else {
                             echo "Vous n'avez pas saisi tous les champs du formulaires.";
                             $this->render('backend.onecommentsuseredit');
@@ -299,6 +299,58 @@ class ManageUserController extends AppManageUserController
                 }
             } else {
                 $routing->redirectToRoute('404');
+            }
+        }
+    }
+
+    public function listUsers(){
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                if ($_SESSION['ROLE'] === '1') {
+                    $request = new UserRepository();
+                    $data = $request->allUsers('blog_users');
+                    $this->render('backend.liste_users', compact('data'));
+                } else {
+                    $routing->redirectToRoute('404');
+                }
+            } else {
+                $routing->redirectToRoute('404');
+            }
+        }
+    }
+
+    public function UsersDelete($id)
+    {
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                if ($_SESSION['ROLE'] === '1') {
+                    $request = new UserRepository();
+                    $request->deleteUser(htmlspecialchars($id), 'blog_users');
+                    $routing->redirectToRoute('backoffice/users');
+                } else {
+                    $routing->redirectToRoute('404');
+                }
+            }
+        }
+    }
+
+    public function UsersActivate($id)
+    {
+        $routing = New \Core\Router\Routing();
+        if (!session_id()) {
+            session_start();
+            if (!empty($_SESSION)) {
+                if ($_SESSION['ROLE'] === '1') {
+                    $request = new UserRepository();
+                    $request->activateUser(htmlspecialchars($id), 'blog_users');
+                    $routing->redirectToRoute('backoffice/users');
+                } else {
+                    $routing->redirectToRoute('404');
+                }
             }
         }
     }

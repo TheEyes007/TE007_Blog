@@ -102,3 +102,10 @@ a{
 th {
     text-align:center;
 }
+
+.black-glyphicon{
+    color:black;
+}
+.comments-warning{
+    margin-left:3px;
+}

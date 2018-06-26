@@ -20,6 +20,7 @@ ob_start();
                          echo '<a class="btn btn-danger float-right" style="margin-left:3px;" href="/myaccount/delete">Supprimer votre compte</a>';
                     }
                  }
+            $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_create);
             ?>
                     <a class="btn btn-success float-right" style="margin-left:3px;" href="/myaccount/edit">Editer votre compte</a>
                     <a class="btn btn-success float-right" style="margin-left:3px;" href="/myaccount/comments">Lister vos commentaires</a>
@@ -28,6 +29,7 @@ ob_start();
             <hr/>
                 <p>Nom en minuscule :  <?= $value->name_canonical ?></p>
                 <p>Email :  <?= $value->email ?></p>
+                <p>Date de création du compte :  <?= date_format($date,'d/m/Y H:i:s') ?></p>
             <?php endforeach; ?>
         </div>
     </div>

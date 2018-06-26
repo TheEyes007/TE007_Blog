@@ -67,6 +67,21 @@ $router = new \Core\Router\Router($_GET['url']);
             $home->oneCommentsAction($id);
         });
 
+        $router->get('/backoffice/users', function () {
+            $home = New ManagePostsController();
+            $home->listUsersAction();
+        });
+
+        $router->get('/backoffice/users/delete/:id', function ($id) {
+            $home = New ManagePostsController();
+            $home->deleteUsersAction($id);
+        });
+
+        $router->get('/backoffice/users/activate/:id', function ($id) {
+            $home = New ManagePostsController();
+            $home->activateUsersAction($id);
+        });
+
         $router->get('/myaccount', function () {
             $home = New ManagePostsController();
             $home->accountAction();
@@ -76,6 +91,11 @@ $router = new \Core\Router\Router($_GET['url']);
             $home = New ManagePostsController();
             $home->accountEditAction();
         });
+
+    $router->post('/myaccount/edit', function () {
+        $home = New ManagePostsController();
+        $home->accountEditAction();
+    });
 
     $router->get('/myaccount/delete', function () {
         $home = New ManagePostsController();
@@ -138,10 +158,6 @@ $router = new \Core\Router\Router($_GET['url']);
     $home->registerAction();
     });
 
-    $router->get('/posts', function () {
-        $posts = New PostsController();
-        $posts->postsAction();
-    });
     $router->get('/contacts', function () {
         $contacts = New PostsController();
         $contacts->contactsAction();

@@ -11,9 +11,11 @@
                 <div class="row">
                     <div class="title"><h2><?= $value->title ?></h2></div>
                     <?php
-                    echo "<p>Article n°" . $value->id . " écrit le " . $value->date_create . " par ". $value->name .".</p>";
+                    $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_create);
+                    echo "<p>Article écrit le " . date_format($date,'d/m/Y H:i:s') . " par ". $value->name .".</p>";
                     if($value->date_update != NULL) {
-                        echo "<p>Date de la dernière mise à jour : ".$value->date_update."</p>";
+                        $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_update);
+                        echo "<p>Date de la dernière mise à jour : ".date_format($date,'d/m/Y H:i:s')."</p>";
                     }
                     ?>
                     <div class="text-justify"><hr/><?= html_entity_decode(trim(substr($value->contains,0,600),'"')) ?></div>

@@ -45,7 +45,7 @@ class ManagePostsController extends AppController
                     $request = new PostsRepository();
                     if (isset($_POST['addposts'])) {
                         if (!empty($_POST['titre']) AND !empty($_POST['articles'])) {
-                            $request->addPosts(intval($_SESSION['user_key']), htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['articles'])), 'blog_posts');
+                            $request->addPosts(intval(htmlspecialchars($_SESSION['user_key'])), htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['articles'])), 'blog_posts');
                             $routing->redirectToRoute('backoffice');
                         } else {
                             echo "Vous n'avez pas saisi tous les champs du formulaires.";
@@ -94,7 +94,7 @@ class ManagePostsController extends AppController
 
                     if (isset($_POST['editposts'])) {
                         if (!empty($_POST['titre']) AND !empty($_POST['articles'])) {
-                            $request->editPosts(intval($_SESSION['user_key']), htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['articles'])), 'blog_posts', $id);
+                            $request->editPosts(intval(htmlspecialchars($_SESSION['user_key'])), htmlspecialchars(addslashes($_POST['titre'])), htmlspecialchars(addslashes($_POST['articles'])), 'blog_posts', htmlspecialchars($id));
                             $routing->redirectToRoute('backoffice');
                         } else {
                             echo "Vous n'avez pas saisi tous les champs du formulaires.";
@@ -175,5 +175,23 @@ class ManagePostsController extends AppController
     {
         $loginUser = new \Core\ManageUser\Controller\ManageUserController();
         $user_request = $loginUser->CommentsEditByUser($id);
+    }
+
+    public function listUsersAction()
+    {
+        $userList = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $userList->listUsers();
+    }
+
+    public function activateUsersAction($id)
+    {
+        $userdelete = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $userdelete->UsersActivate($id);
+    }
+
+    public function deleteUsersAction($id)
+    {
+        $useractivate = new \Core\ManageUser\Controller\ManageUserController();
+        $user_request = $useractivate->UsersDelete($id);
     }
 }

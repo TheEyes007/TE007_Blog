@@ -59,19 +59,18 @@ class ManageCommentsController extends AppController
                 if ($_SESSION['ROLE'] === '1') {
                     $request = new CommentsRepository();
                     $data = $request->alertSelectComments(htmlspecialchars($id),'blog_comments');
-                    $verifComments = $request->alertControlCountComments($id, $_SESSION['user_key']);
+                    $verifComments = $request->alertControlCountComments(htmlspecialchars($id), htmlspecialchars($_SESSION['user_key']));
                     if ($data[0]->alert === '0')
                         {
                             if (intval($verifComments[0]->nbalertcomments) === 0) {
-                                $request->addAlertComments($id,$_SESSION['user_key'],'blog_warningcomments');
+                                $request->addAlertComments(htmlspecialchars($id),htmlspecialchars($_SESSION['user_key']),'blog_warningcomments');
                                 $request->alertComments('1', htmlspecialchars($id), 'blog_comments');
                                 }
                         }
                     else
                         {
                             $request->alertComments('0', htmlspecialchars($id), 'blog_comments');
-                            $request->AdminDeleteAlertComments($id,'blog_warningcomments');
-                            $request->InitDeleteAlertComments();
+                            $request->AdminDeleteAlertComments(htmlspecialchars($id),'blog_warningcomments');
                         }
 
                     $routing->redirectToRoute('backoffice/comments');
@@ -92,7 +91,7 @@ class ManageCommentsController extends AppController
             if (!empty($_SESSION)) {
                 if ($_SESSION['ROLE'] === '1') {
                     $request = new CommentsRepository();
-                    $data = $request->oneComments($id, 'blog_comments');
+                    $data = $request->oneComments(htmlspecialchars($id), 'blog_comments');
                     $this->render('backend.one_commentaire', compact('data'));
 
                 } else {

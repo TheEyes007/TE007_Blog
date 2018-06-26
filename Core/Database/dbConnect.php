@@ -31,4 +31,12 @@ class dbConnect
         return $datas;
 
     }
+
+    public function getPrepare($statement){
+        $req = $this->getPDO()->prepare($statement);
+        $req->execute();
+        $datas = $req->fetchAll(PDO::FETCH_OBJ);
+        return $datas;
+
+    }
 }

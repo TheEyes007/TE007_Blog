@@ -15,7 +15,7 @@ ob_start();
                     echo $value;
                 }
                 ?>
-                <a class="btn btn-warning float-left" href="/">Retour</a>
+                <a class="btn btn-warning float-left" href="/myaccount">Retour</a>
             </form>
         </div>
 

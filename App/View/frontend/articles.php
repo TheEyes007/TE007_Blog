@@ -15,10 +15,12 @@ ob_start();
             <?php
                 foreach ($data as $value) {
                     echo "<h1>" . $value->title . "</h1>";
-                    echo "<p>Article n°" . $value->id . " écrit le " . $value->date_create . " par ". $value->name .".</p>";
+                    $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_create);
+                    echo "<p>Article écrit le " . date_format($date,'d/m/Y H:i:s') . " par ". $value->name .".</p>";
 
                     if($value->date_update != NULL) {
-                       echo "<p>Date de la dernière mise à jour : ".$value->date_update."</p>";
+                        $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_update);
+                       echo "<p>Date de la dernière mise à jour : ".date_format($date,'d/m/Y H:i:s')."</p>";
                     }
                     echo '<div class="text-justify"><hr/>'.html_entity_decode(trim($value->contains,'"')).'</div>';
                 }
@@ -39,7 +41,7 @@ ob_start();
     </div>
     <?php else: ?>
     <div class="row inline-block">
-        <h4 class="edit-new-posts">Vous devez être inscrits pour laisser votre commentaire</h4>
+        <h4 class="edit-new-posts">Vous devez être inscrits pour <b>signaler</b> ou <b>laisser</b> votre commentaire</h4>
         <hr/>
     </div>
     <?php endif; ?>
@@ -48,20 +50,23 @@ ob_start();
         <h4 class="edit-new-posts">Liste des commentaires</h4>
         <hr/>
         <?php
-            foreach ($data_comments as $value) {
-                if($value->alert === '0')
-                {
-                    echo "<h5>" . $value->title . '<a href="comments/'. $value->id .'" class="btn btn-success float-right" title="Signaler"><span class="glyphicon glyphicon-flag"></span></a></h5>';
-                }
-                else
-                {
-                    echo "<h5>" . $value->title . '<a href="comments/'. $value->id .'" class="btn btn-danger float-right" title="Ne pas signaler"><span class="glyphicon glyphicon-flag"></span></a></h5>';
-                }
-                echo "<p>Commentaire n°" . $value->id . " écrit le " . $value->date_create . " par ". $value->name .".</p>";
-                if($value->date_update != NULL) {
-                    echo "<p>Date de la dernière mise à jour : ".$value->date_update."</p>";
-                }
-                echo '<br/><div class="text-justify">'.$value->contains.'</div><hr/>';
+                    foreach ($data_comments as $value) {
+                        if (!empty($_SESSION)) {
+                            if($value->alert === '0') {
+                                echo "<h5>" . $value->title . '<a href="comments/' . $value->id . '" class="btn btn-default float-right" title="Signaler"><span class="glyphicon glyphicon-flag black-glyphicon"></span></a></h5>';
+                            } else{
+                                echo "<h5>" . $value->title . '<a class="btn btn-warning float-right comments-warning" title="Commentaire déjà signalé"><span class="glyphicon glyphicon-alert"></span></a><a href="comments/' . $value->id . '" class="btn btn-default float-right" title="Signaler"><span class="glyphicon glyphicon-flag black-glyphicon"></span></a></h5>';
+                            }
+
+
+                        }
+                        $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_create);
+                        echo "<p>Commentaire n° écrit le " . date_format($date,'d/m/Y H:i:s') . " par ". $value->name .".</p>";
+                        if($value->date_update != NULL) {
+                            $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_update);
+                            echo "<p>Date de la dernière mise à jour : ".date_format($date,'d/m/Y H:i:s')."</p>";
+                        }
+                        echo '<br/><div class="text-justify">'.$value->contains.'</div><hr/>';
             }
         ?>
     </div>
