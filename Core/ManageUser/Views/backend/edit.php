@@ -1,6 +1,6 @@
 <?php
 
-$title = 'Mon blog';
+$title = 'Backoffice - Gérer les utilisateurs';
 
 ob_start();
 ?>

@@ -1,12 +1,12 @@
 <?php
 
-$title = 'Mon blog';
+$title = 'Backoffice - Modifier un chapitre';
 
 ob_start();
 ?>
 <div class="container">
     <div class="row inline-block">
-        <h4 class="edit-new-posts">Editer un article</h4>
+        <h4 class="edit-new-posts">Editer un chapitre</h4>
         <hr/>
         <div class="form-group center-align">
             <form method="POST" action="" >

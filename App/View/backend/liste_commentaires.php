@@ -1,4 +1,4 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Backoffice - Liste des commentaires'; ?>
 <?php ob_start(); ?>
 <div class="container">
     <div class="row">
@@ -12,7 +12,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Titre</th>
-                        <th scope="col">Contenu de l'article</th>
+                        <th scope="col">Contenu du commentaire</th>
                         <th scope="col">Date de création</th>
                         <th scope="col">Date de mise à jour</th>
                         <th scope="col">Créateurs</th>

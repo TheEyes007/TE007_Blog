@@ -17,7 +17,7 @@ class dbConnect
 
     public function getPDO(){
         if($this->pdo === NULL) {
-            $pdo = new PDO('mysql:host=localhost;dbname=blog', 'root', '');
+            $pdo = new PDO('mysql:host=localhost;dbname=blog', 'blog', 'Ma83sy57ni78');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo = $pdo;
             return $pdo;

@@ -1,4 +1,4 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Backoffice - Liste des utilisateurs'; ?>
 <?php ob_start(); ?>
 <div class="container">
     <div class="row">

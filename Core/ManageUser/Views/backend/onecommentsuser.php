@@ -1,6 +1,6 @@
 <?php
 
-$title = 'Mon blog';
+$title = 'Mon compte - mon commentaire';
 
 ob_start();
 ?>

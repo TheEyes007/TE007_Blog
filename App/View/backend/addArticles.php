@@ -2,7 +2,7 @@
 
 use App\Form\PostsForm;
 
-$title = 'Mon blog';
+$title = 'Backoffice - Ajouter un chapitre';
 $form = new PostsForm();
 $comments_form = $form->NewPost();
 
@@ -11,7 +11,7 @@ ob_start();
 ?>
 <div class="container">
     <div class="row">
-        <h4 class="edit-new-posts">Ajouter un article</h4>
+        <h4 class="edit-new-posts">Ajouter un chapitre</h4>
         <hr/>
         <div class="form-group center-align">
             <form method="POST" action="" >

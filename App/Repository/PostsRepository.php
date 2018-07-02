@@ -43,7 +43,7 @@ class PostsRepository
     public function editPosts($user = 1, $titre, $contain, $table, $id)
     {
         $this->table = $table;
-        $req = 'UPDATE ' . $table . ' set fk_user = ' . $user . ', title = ' . '\'' . $titre . '\', contains = ' . '\'' . $contain . '\' where id = ' . $id . ';';
+        $req = 'UPDATE ' . $table . ' set fk_user = ' . $user . ', title = ' . '\'' . $titre . '\', contains = ' . '\'' . $contain . '\', date_update = NOW() where id = ' . $id . ';';
         $db_connect = new Parameters();
         $db_connect->getConnectDb()->getPDO()->prepare($req)->execute();
     }

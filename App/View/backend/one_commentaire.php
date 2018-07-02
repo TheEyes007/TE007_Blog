@@ -1,6 +1,6 @@
 <?php
 
-$title = 'Mon blog';
+$title = 'Backoffice - Liste d\'un commentaire';
 
 ob_start();
 ?>

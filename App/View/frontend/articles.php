@@ -2,7 +2,7 @@
 
 use App\Form\CommentsForm;
 
-$title = 'Mon blog';
+$title = 'Jean Forteroche, chapitre - '.$data[0]->title;
 $form = new CommentsForm();
 $comments_form = $form->NewComment();
 
@@ -16,7 +16,7 @@ ob_start();
                 foreach ($data as $value) {
                     echo "<h1>" . $value->title . "</h1>";
                     $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_create);
-                    echo "<p>Article écrit le " . date_format($date,'d/m/Y H:i:s') . " par ". $value->name .".</p>";
+                    echo "<p>Chapitre écrit le " . date_format($date,'d/m/Y H:i:s') . " par ". $value->name .".</p>";
 
                     if($value->date_update != NULL) {
                         $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_update);

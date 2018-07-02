@@ -1,4 +1,4 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Mon compte - mes commentaires'; ?>
 <?php ob_start(); ?>
 <div class="container">
     <div class="row">
@@ -13,7 +13,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Titre du commentaire</th>
                     <th scope="col">Contenu du commentaire</th>
-                    <th scope="col">Nom de l'article</th>
+                    <th scope="col">Nom du chapitre</th>
                     <th scope="col">Date de création</th>
                     <th scope="col">Date de mise à jour</th>
                     <th scope="col">Créateurs</th>

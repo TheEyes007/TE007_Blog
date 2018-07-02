@@ -32,7 +32,7 @@
                     } else {
                         if($_SESSION['ROLE'] === '1') {
                             echo "<li><a href=\"/myaccount\">Mon compte</a></li>";
-                            echo "<li><a href=\"/backoffice\">Gestion des articles</a></li>";
+                            echo "<li><a href=\"/backoffice\">Gestion des chapitres</a></li>";
                             echo "<li><a href=\"/backoffice/comments\">Gestion des commentaires</a></li>";
                             echo "<li><a href=\"/backoffice/users\">Gestion des utilisateurs</a></li>";
                             echo "<li><a href=\"/logout\">Se déconnecter</a></li>";
@@ -68,7 +68,7 @@
         </div>
     </div>
     <div class="footer-bottom-layout">
-        <div class="copyright-tag">Copyright © 2017 company name. All Rights Reserved.</div>
+        <div class="copyright-tag">Copyright © 2018 Jean Forteroche. All Rights Reserved.</div>
     </div>
 </footer>
 <script src="/vendor/jquery.min.js"></script>

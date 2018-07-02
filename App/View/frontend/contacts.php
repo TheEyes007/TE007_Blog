@@ -2,7 +2,7 @@
 
 use App\Form\ContactForm;
 
-$title = 'Mon blog';
+$title = 'Jean Forteroche, son blog, son voyage en Alaska - Contactez-moi';
 $form = new ContactForm();
 $contact_form = $form->NewContact();
 

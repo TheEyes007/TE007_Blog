@@ -2,7 +2,7 @@
 
 use Core\ManageUser\Form\ManageUserForm;
 
-$title = 'Mon blog';
+$title = 'Jean Forteroche, son blog, son voyage en Alaska - Login';
 $form = new ManageUserForm();
 $user_form = $form->ConnectUser();
 

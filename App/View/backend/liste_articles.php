@@ -1,10 +1,10 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Backoffice - Liste des chapitres'; ?>
 <?php ob_start(); ?>
 <div class="container">
     <div class="row">
         <div clas="inline-block">
-            <h4>Liste des articles
-                <a class="btn btn-success float-right" style="margin-left:3px;" href="/backoffice/add">Nouveau article</a>
+            <h4>Liste des chapitres
+                <a class="btn btn-success float-right" style="margin-left:3px;" href="/backoffice/add">Nouveau chapitre</a>
                 <a class="btn btn-warning float-right" href="/">Retour</a>
             </h4>
         </div>
@@ -15,7 +15,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titre</th>
-                    <th scope="col">Contenu de l'article</th>
+                    <th scope="col">Contenu du chapitre</th>
                     <th scope="col">Date de création</th>
                     <th scope="col">Date de mise à jour</th>
                     <th scope="col">Créateurs</th>

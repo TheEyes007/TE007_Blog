@@ -6,7 +6,7 @@
  * Time: 21:13
  */
 
-$title = 'Mon blog';
+$title = 'Mon compte - mes informations';
 
 ob_start();
 ?>

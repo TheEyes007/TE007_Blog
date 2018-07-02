@@ -1,6 +1,6 @@
 <?php
 
-$title = 'Mon blog';
+$title = 'Backoffice - Vue d\'un chapitre';
 
 ob_start();
 ?>
@@ -10,7 +10,7 @@ ob_start();
                 foreach ($data as $value) {
                     echo "<h4>" . $value->title . "<a class=\"btn btn-warning float-right\" href=\"/backoffice\">Retour</a></h4><hr/>";
                         $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_create);
-                        echo "<p>Article écrit le " . date_format($date,'d/m/Y H:i:s') . " par ". $value->name ."</p>";
+                        echo "<p>Chapitre écrit le " . date_format($date,'d/m/Y H:i:s') . " par ". $value->name ."</p>";
                     if($value->date_update != NULL) {
                          $date = DateTime::createFromFormat('Y-m-d H:i:s', $value->date_update);
                          echo "<p>Date de la dernière mise à jour : ".date_format($date,'d/m/Y H:i:s')."</p>";
